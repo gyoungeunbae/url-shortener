@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+
+</head>
+<body>
+<div class="container">
+    <form th:object="${url}" action="/urls/new" method="post">
+        <p>URL: <input type="url" name="destination" th:value="${url.destination}"/></p>
+        <p><input type="submit" value="생성"/></p>
+    </form>
+    <p th:if="${createdUrl != null}" th:text="${createdUrl}"></p>
+</div>
+</body>
+</html>
