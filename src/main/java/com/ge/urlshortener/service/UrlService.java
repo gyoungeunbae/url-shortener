@@ -2,33 +2,38 @@ package com.ge.urlshortener.service;
 
 import com.ge.urlshortener.domain.Url;
 import com.ge.urlshortener.repository.UrlRepository;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
+import java.util.Map;
+
+import static com.ge.urlshortener.domain.Url.makeRandomString;
 
 @Service
 public class UrlService {
+
     private final UrlRepository urlRepository;
 
+    @Autowired
     public UrlService(UrlRepository urlRepository) {
         this.urlRepository = urlRepository;
     }
 
     public Url createUrl(String destination) {
-        boolean isExist = this.urlRepository.isExistDestination(destination);
-
+        boolean isExist = this.isExistDestination(destination);
         if (isExist) {
             Url url = this.urlRepository.getUrl(destination);
-            int count = url.getRequestCount();
-            url.setRequestCount(count++);
+            url.countRequest();
             return url;
         }
-        String random = this.makeRandomString();
-        Url url = new Url();
-        url.setShortenUrl(random);
-        url.setDestination(destination);
 
+        String randomString = makeRandomString();
+        boolean isExistRandom = isExistRandomString(randomString);
+        while (isExistRandom == true) {
+            randomString = makeRandomString();
+            isExistRandom = isExistRandomString(randomString);
+        }
+        Url url = Url.of(destination, randomString);
         this.urlRepository.save(url);
 
         return url;
@@ -39,35 +44,26 @@ public class UrlService {
         return url;
     }
 
-    private String makeRandomString() {
-        String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String lower = "abcdefghijklmnopqrstuvwxyz";
-        String number = "0123456789";
-
-        String combined = upper + lower + number;
-
-        StringBuilder stringBuilder = new StringBuilder();
-        Random random = new Random();
-
-        int length = 7;
-
-        for (int i = 0; i < length; i++) {
-            int index = random.nextInt(combined.length());
-            char randomChar = combined.charAt(index);
-            stringBuilder.append(randomChar);
+    public boolean isExistRandomString(String randomUrl) {
+        Map<String, Url> store = this.urlRepository.getStore();
+        for (Url url : store.values()) {
+            String shortenUrl = url.getShortenUrl();
+            if (shortenUrl.equals(randomUrl)) {
+                return true;
+            }
         }
-        String randomString = stringBuilder.toString();
-
-        if (this.urlRepository.isExistRandomString(randomString)) {
-            randomString = this.makeRandomString();
-        }
-
-        return randomString;
+        return false;
     }
-    /*
-    private String getHostAddress() {
-        String port = environment.getProperty("local.server.port");
-        String hostAddress = InetAddress.getLoopbackAddress().getHostAddress();
-        return "http://"+ hostAddress + ":" + port + "/";
-    }*/
+
+    public boolean isExistDestination(String address) {
+        Map<String, Url> store = this.urlRepository.getStore();
+
+        for (Url u : store.values()) {
+            String url = u.getDestination();
+            if (url.equals(address)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

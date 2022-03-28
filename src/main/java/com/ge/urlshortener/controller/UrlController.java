@@ -2,6 +2,7 @@ package com.ge.urlshortener.controller;
 
 import com.ge.urlshortener.domain.Url;
 import com.ge.urlshortener.service.UrlService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,16 +18,16 @@ public class UrlController {
 
     private UrlService urlService;
 
+    @Autowired
     public UrlController(UrlService urlService) {
         this.urlService = urlService;
     }
 
-    @PostMapping(value = "/urls/new")
+    @PostMapping(value = "/urls/new", params = "destination")
     public String create(@Valid Url url, Model model) {
         Url created = this.urlService.createUrl(url.getDestination());
-
-        model.addAttribute("createdUrl", "http://localhost:8080/to/" + created.getShortenUrl());
-        return "home";
+        model.addAttribute("createdUrl", created.getShortenUrl());
+        return "/home";
     }
 
     @GetMapping(value = "/to/{shorten}")

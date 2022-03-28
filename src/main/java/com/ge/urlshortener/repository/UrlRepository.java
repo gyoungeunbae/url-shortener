@@ -22,26 +22,10 @@ public class UrlRepository {
         return store.get(destination);
     }
 
-    public boolean isExistRandomString(String randomUrl) {
-        for (Url url : store.values()) {
-            String shortenUrl = url.getShortenUrl();
-            if (shortenUrl.equals(randomUrl)) {
-                return true;
-            }
-        }
-        return false;
+    public static Map<String, Url> getStore() {
+        return store;
     }
 
-    public boolean isExistDestination(String address) {
-        for (Url u : store.values()) {
-            String url = u.getDestination();
-            if (url.equals(address)) {
-                return true;
-            }
-        }
-        return false;
-    }    
-    
     public Url findDestination(String shortenUrl) {
         for (Url url : store.values()) {
             String shorten = url.getShortenUrl();

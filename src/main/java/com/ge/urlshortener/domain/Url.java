@@ -1,47 +1,57 @@
 package com.ge.urlshortener.domain;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Random;
 
+@Getter
+@Builder
 public class Url {
-
-    private long id;
+    @Setter
+    private Long id;
     @NotEmpty
     @URL
     private String destination;
     private String shortenUrl;
-    private int requestCount;
+    @Setter
+    private Integer requestCount;
 
-    public long getId() {
-        return id;
+    public static Url of(String destination, String randomString) {
+        return builder()
+                .destination(destination)
+                .requestCount(0)
+                .shortenUrl(randomString)
+                .build();
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public Url countRequest() {
+        int count = this.requestCount++;
+        this.setRequestCount(count);
+        return this;
     }
 
-    public String getShortenUrl() {
-        return shortenUrl;
-    }
+    public static String makeRandomString() {
+        String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String lower = "abcdefghijklmnopqrstuvwxyz";
+        String number = "0123456789";
 
-    public void setShortenUrl(String shortenUrl) {
-        this.shortenUrl = shortenUrl;
-    }
+        String combined = upper + lower + number;
 
-    public String getDestination() {
-        return destination;
-    }
+        StringBuilder stringBuilder = new StringBuilder();
+        Random random = new Random();
 
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
+        int length = 7;
 
-    public int getRequestCount() {
-        return requestCount;
-    }
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(combined.length());
+            char randomChar = combined.charAt(index);
+            stringBuilder.append(randomChar);
+        }
 
-    public void setRequestCount(int requestCount) {
-        this.requestCount = requestCount;
+        return stringBuilder.toString();
     }
 }
