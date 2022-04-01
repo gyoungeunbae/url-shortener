@@ -9,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @SpringBootTest
 public class UrlRepositoryTest {
@@ -26,9 +25,8 @@ public class UrlRepositoryTest {
     @BeforeEach
     void setUp() {
         destination = "http://www.google.com";
-        url = Url.of(destination, "randomString");
-        store = new ConcurrentHashMap<>();
-        store.put(destination, url);
+        url = Url.of(destination);
+        store = UrlRepository.getStore();
     }
 
     @Test
@@ -44,9 +42,24 @@ public class UrlRepositoryTest {
     }
 
     @Test
+    @DisplayName("random string이 중복일 때 저장")
+    void testWithDuplicatedRandomStringSave() {
+        // given
+        store.put(destination, url);
+
+        // when
+        Long actualId = this.urlRepository.save(url);
+        Url storedUrl = this.urlRepository.getUrlById(actualId);
+
+        // then
+        Assertions.assertNotEquals(url.getShortenUrl(), storedUrl.getShortenUrl());
+    }
+
+    @Test
     @DisplayName("destination으로 검색")
     void testWithGetUrl() {
         // given
+        store.put(destination, url);
 
         // when
         Url actual = this.urlRepository.findDestination(url.getShortenUrl());

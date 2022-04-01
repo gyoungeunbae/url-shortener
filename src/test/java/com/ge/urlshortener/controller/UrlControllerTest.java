@@ -11,7 +11,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.ge.urlshortener.domain.Url.makeRandomString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -31,15 +30,12 @@ public class UrlControllerTest {
 
     String destination;
 
-    String randomString;
-
     Url url;
 
     @BeforeEach
     void setUp() {
         destination = "http://www.google.com";
-        randomString = makeRandomString();
-        url = Url.of(destination, randomString);
+        url = Url.of(destination);
     }
 
     @Test

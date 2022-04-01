@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Random;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -20,7 +21,8 @@ public class Url {
     @Setter
     private Integer requestCount;
 
-    public static Url of(String destination, String randomString) {
+    public static Url of(String destination) {
+        String randomString = makeRandomString();
         return builder()
                 .destination(destination)
                 .requestCount(0)
@@ -35,23 +37,7 @@ public class Url {
     }
 
     public static String makeRandomString() {
-        String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String lower = "abcdefghijklmnopqrstuvwxyz";
-        String number = "0123456789";
-
-        String combined = upper + lower + number;
-
-        StringBuilder stringBuilder = new StringBuilder();
-        Random random = new Random();
-
-        int length = 7;
-
-        for (int i = 0; i < length; i++) {
-            int index = random.nextInt(combined.length());
-            char randomChar = combined.charAt(index);
-            stringBuilder.append(randomChar);
-        }
-
-        return stringBuilder.toString();
+        return UUID.randomUUID().toString()
+                .replace("-", "");
     }
 }

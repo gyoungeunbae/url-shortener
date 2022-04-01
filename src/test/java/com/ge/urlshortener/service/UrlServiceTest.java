@@ -28,7 +28,7 @@ public class UrlServiceTest {
     @BeforeEach
     void setUp() {
         destination = "http://www.google.com";
-        url = Url.of(destination, "randomString");
+        url = Url.of(destination);
     }
 
     @Test

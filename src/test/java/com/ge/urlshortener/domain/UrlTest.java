@@ -11,14 +11,12 @@ public class UrlTest {
     void testWithOf() {
         // given
         String destination = "http://www.google.com";
-        String randomString = "randomString";
 
         // when
-        Url actual = Url.of(destination, randomString);
+        Url actual = Url.of(destination);
 
         // then
         Assertions.assertEquals(destination, actual.getDestination());
-        Assertions.assertEquals(randomString, actual.getShortenUrl());
         Assertions.assertEquals(0, actual.getRequestCount());
     }
 
