@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+
+</head>
+<body>
+<div class="container">
+    <form th:object="${url}" action="/urls/new" method="post">
+        <p>URL: <input type="url" name="destination" th:value="'http://'" + "${url.destination}"/></p>
+        <p><input type="submit" value="생성"/></p>
+    </form>
+    <script th:inline="javascript">
+        let address = window.location.origin
+        if ([[${createdUrl}]] != null ) {
+            document.write(address + '/to/' + [[${createdUrl}]])
+        }
+    </script>
+</div>
+</body>
+</html>
