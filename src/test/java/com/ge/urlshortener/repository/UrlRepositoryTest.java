@@ -1,14 +1,14 @@
 package com.ge.urlshortener.repository;
 
 import com.ge.urlshortener.domain.Url;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @SpringBootTest
 public class UrlRepositoryTest {
@@ -27,6 +27,11 @@ public class UrlRepositoryTest {
         destination = "http://www.google.com";
         url = Url.of(destination);
         store = UrlRepository.getStore();
+    }
+
+    @AfterEach
+    void after() {
+        this.urlRepository.setSequence(0L);
     }
 
     @Test
@@ -68,5 +73,23 @@ public class UrlRepositoryTest {
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(url.getDestination(), actual.getDestination());
         Assertions.assertEquals(url.getShortenUrl(), actual.getShortenUrl());
+    }
+
+    @Test
+    @DisplayName("동시성 문제 테스트")
+    public void testCounterWithConcurrency() throws InterruptedException {
+        int numberOfThreads = 10;
+        ExecutorService service = Executors.newFixedThreadPool(10);
+        CountDownLatch latch = new CountDownLatch(numberOfThreads);
+
+        for (int i = 0; i < numberOfThreads; i++) {
+            service.execute(() -> {
+                this.urlRepository.save(url);
+                latch.countDown();
+            });
+        }
+        latch.await();
+        long sequence = this.urlRepository.getSequence();
+        Assertions.assertEquals(numberOfThreads, sequence);
     }
 }

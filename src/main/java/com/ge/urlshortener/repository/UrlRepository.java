@@ -22,9 +22,9 @@ public class UrlRepository {
         }
         synchronized (UrlRepository.class) {
             url.setId(sequence++);
+            store.put(url.getDestination(), url);
         }
 
-        store.put(url.getDestination(), url);
         return url.getId();
     }
 
@@ -44,6 +44,13 @@ public class UrlRepository {
 
     public static Map<String, Url> getStore() {
         return store;
+    }
+
+    public long getSequence() {
+        return sequence;
+    }
+    public void setSequence(long sequence) {
+        this.sequence = sequence;
     }
 
     public Url findDestination(String shortenUrl) {
