@@ -23,7 +23,7 @@ public class UrlService {
     }
 
     public Url findDestination(String shortenUrl) {
-        Url url = this.urlRepository.findDestination(shortenUrl);
+        Url url = this.urlRepository.findDestinationByUrl(shortenUrl);
         return url;
     }
 
