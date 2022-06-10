@@ -52,7 +52,7 @@ public class UrlServiceTest {
         // given
 
         // when
-        when(repository.findDestination(url.getShortenUrl())).thenReturn(url);
+        when(repository.findDestinationByUrl(url.getShortenUrl())).thenReturn(url);
         Url actual = this.service.findDestination(url.getShortenUrl());
 
         // then
