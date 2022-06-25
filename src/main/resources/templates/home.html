@@ -1,22 +1,97 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>home</title>
-
-</head>
-<body>
-<div class="container">
-    <form th:object="${url}" action="/urls/new" method="post">
-        <p>URL: <input type="url" name="destination" th:value="'http://'" + "${url.destination}"/></p>
-        <p><input type="submit" value="생성"/></p>
-    </form>
-    <script th:inline="javascript">
-        let address = window.location.origin
-        if ([[${createdUrl}]] != null ) {
-            document.write(address + '/to/' + [[${createdUrl}]])
-        }
-    </script>
-</div>
-</body>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <style>
+    html {
+      background-color: #f0f0f3;
+    }
+    @font-face {
+      font-family: "GongGothicBold";
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicBold.woff")
+        format("woff");
+      font-weight: normal;
+      font-style: normal;
+    }
+    p {
+      color: #494949;
+      font-size: 30px;
+      font-family: "GongGothicBold";
+      margin-top: 100px;
+      margin-left: 10px;
+    }
+    .url-input {
+      margin: 5px;
+      padding-left: 15px;
+      display: flex;
+      justify-content: center;
+      width: 350px;
+      height: 40px;
+      background-color: #ffffff;
+      border-color: #ffffff;
+      border: transparent;
+      border-radius: 15px;
+      box-shadow: inset -5px -5px 9px rgba(255, 255, 255, 0.2),
+        inset 5px 5px 9px rgba(94, 104, 121, 0.2);
+      outline-color: rgba(51, 182, 89, 0.5);
+      font-size: 15px;
+    }
+    .urlLayout {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    body {
+      height: 100vh;
+      margin: 20px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .btn {
+      margin-left: 10px;
+      height: 40px;
+      width: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(51, 182, 89);
+      border-color: transparent;
+      border-radius: 10px;
+      color: white;
+    }
+    .btn:hover {
+      background: rgba(51, 182, 89, 0.7);
+    }
+    .result {
+      background: transparent;
+      height: 45px;
+      border-radius: 15px;
+      margin-top: 10px;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+    .url {
+      background: transparent;
+      margin-top: 10px;
+    }
+  </style>
+  <head>
+    <link
+      rel="shortcut icon"
+      href="https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.ico"
+    />
+    <title>url-shortener created-by-leechGamer</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="This is my first website!!!!" />
+  </head>
+  <body>
+    <div id="layout">
+      <p>URL SHORTENER</p>
+      <div class="urlLayout" id="urlLayout">
+        <input id="urlInput" class="url-input" placeholder="Shorten your link" type="url" />
+        <button id="shorten" class="btn hover1">Shorten</button>
+      </div>
+    </div>
+    <script src="/js/app.js"></script>
+  </body>
 </html>

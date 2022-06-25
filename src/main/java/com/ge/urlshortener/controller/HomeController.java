@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class HomeController {
-    @GetMapping
+    @GetMapping("/")
     public String home(@ModelAttribute Url url) {
         return "home";
     }
