@@ -1,33 +1,29 @@
 package com.ge.urlshortener.controller;
 
 import com.ge.urlshortener.domain.Url;
+import com.ge.urlshortener.dto.RequestDTO;
 import com.ge.urlshortener.service.UrlService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 
-@Controller
+@RestController
+@RequiredArgsConstructor
 public class UrlController {
 
-    private UrlService urlService;
+    private final String PROTOCOL = "http://";
 
-    @Autowired
-    public UrlController(UrlService urlService) {
-        this.urlService = urlService;
-    }
+    private final UrlService urlService;
 
-    @PostMapping(value = "/urls/new", params = "destination")
-    public String create(@Valid Url url, Model model) {
-        Url created = this.urlService.createUrl(url.getDestination());
-        model.addAttribute("createdUrl", created.getShortenUrl());
-        return "/home";
+    @PostMapping(value = "/urls/new")
+    public ResponseEntity create(@RequestBody @Valid RequestDTO url) {
+        String requestedUrl = url.destinationTransformer();
+        Url created = this.urlService.createUrl(requestedUrl);
+        return ResponseEntity.status(HttpStatus.OK).body(created);
     }
 
     @GetMapping(value = "/to/{shorten}")
@@ -35,7 +31,7 @@ public class UrlController {
     public RedirectView redirectDestination(@PathVariable String shorten) {
         Url url = this.urlService.findDestination(shorten);
         if (url != null) {
-            return new RedirectView(url.getDestination());
+            return new RedirectView(PROTOCOL + url.getDestination());
         }
         return new RedirectView("/");
     }

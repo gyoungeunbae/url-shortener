@@ -14,8 +14,6 @@ import java.util.UUID;
 public class Url {
     @Setter
     private Long id;
-    @NotEmpty
-    @URL
     private String destination;
     private String shortenUrl;
     @Setter
