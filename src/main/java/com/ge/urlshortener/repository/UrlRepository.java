@@ -16,11 +16,11 @@ public class UrlRepository {
     @Getter @Setter
     private static long sequence = 0L;
 
-    public synchronized Long save(Url url) {
+    public Long save(Url url) {
         String randomString = url.getShortenUrl();
 
         boolean isExistRandom = isExistRandomString(randomString);
-        while (isExistRandom == true) {
+        while (isExistRandom) {
             url = Url.of(url.getDestination());
             isExistRandom = isExistRandomString(url.getShortenUrl());
         }

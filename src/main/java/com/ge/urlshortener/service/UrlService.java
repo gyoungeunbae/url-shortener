@@ -2,20 +2,16 @@ package com.ge.urlshortener.service;
 
 import com.ge.urlshortener.domain.Url;
 import com.ge.urlshortener.repository.UrlRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UrlService {
 
     private final UrlRepository urlRepository;
-
-    @Autowired
-    public UrlService(UrlRepository urlRepository) {
-        this.urlRepository = urlRepository;
-    }
 
     public Url createUrl(String destination) {
         Url url = Url.of(destination);
