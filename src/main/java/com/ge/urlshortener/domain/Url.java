@@ -36,6 +36,6 @@ public class Url {
 
     public static String makeRandomString() {
         return UUID.randomUUID().toString()
-                .replace("-", "");
+                .replace("-", "").substring(0, 7);
     }
 }
