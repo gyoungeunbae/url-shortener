@@ -1,15 +1,15 @@
 # URL SHORTENER
 
 <p align="left">
-  <img src="https://img.shields.io/badge/spring_boot-v2.6.4-green?style=for-the-badge&logo=springboot"  alt="spring-boot"/>
-  <img src="https://img.shields.io/badge/thymeleaf-v2.6.4-brightgreen.svg?style=for-the-badge&logo=Thymeleaf&logoColor=white alt="thymeleaf"/>
-  <img src="https://img.shields.io/badge/Java-11-orange?style=for-the-badge&logo=Java&logoColor=white" alt="Java"/>                                                                                                                                        
+  <img src="https://img.shields.io/badge/spring_boot-v2.6.4-green?style=-the-badge&logo=springboot"  alt="spring-boot"/>
+  <img src="https://img.shields.io/badge/thymeleaf-v2.6.4-brightgreen.svg?style=-the-badge&logo=Thymeleaf&logoColor=white alt="thymeleaf"/>
+  <img src="https://img.shields.io/badge/Java-11-orange?style=-the-badge&logo=Java&logoColor=white" alt="Java"/>                                                                                                                                        
 </p>
 
 
 ## 🎯 About
 https://bitly.com/ 와 같은 단축 URL서비스 입니다.
-
+<br>
 
 
 
