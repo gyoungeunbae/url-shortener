@@ -10,7 +10,7 @@
 ## 🎯 About
 https://bitly.com/ 와 같은 단축 URL서비스 입니다. <br><br>
 Spring Boot와 Java를 공부하며 간단히 구현해본 서비스입니다. <br><br>
-단축하고 싶은 URL을 입력하고 shorten 버튼을 클릭하면 단축된URL을 생성해줍니다.
+단축하고 싶은 URL을 입력하고 shorten 버튼을 클릭하면 단축된URL을 생성해줍니다. <br><br>
 단축URL을 통해 자동으로 orgininal destination으로 포워딩해줍니다.
 <br>
 
