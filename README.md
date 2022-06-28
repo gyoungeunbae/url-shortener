@@ -8,11 +8,10 @@
 
 
 ## 🎯 About
-https://bitly.com/ 와 같은 단축 URL서비스 입니다.
+https://bitly.com/ 와 같은 단축 URL서비스 입니다. <br><br>
+Spring Boot와 Java를 공부하며 간단히 구현해보았습니다. <br><br>
+단축하고 싶은 URL을 입력하고 shorten 버튼을 클릭하면 단축된URL을 확인할 수 있습니다.
 <br>
-
-
-
 
 ## 📸 Screenshots
 ![url-shortener](https://user-images.githubusercontent.com/24830023/175903017-08ef896b-1e00-4d5a-a4f1-b47c9110ec35.png)
