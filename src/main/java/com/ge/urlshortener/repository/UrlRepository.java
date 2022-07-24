@@ -26,8 +26,8 @@ public class UrlRepository {
         }
         synchronized (UrlRepository.class) {
             url.setId(sequence++);
-            store.put(url.getDestination(), url);
         }
+        store.put(url.getDestination(), url);
 
         return url.getId();
     }
